@@ -5,17 +5,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import supabase from '../supabaseClient';
 import { fetchProfile } from '../component/UserOperations/fetchProfile';
 
+import Settings from '../screens/Settings';  // Settings screen
+import ExternalResources from '../screens/ExternalResources';  // External Resources screen
+import AwardsCertificates from '../screens/AwardsCertificates';  // Awards / Certificates screen
+import ContactUs from '../screens/ContactUs';  // Contact Us screen
+import Help from '../screens/Help';  // Help screen
 import HomeTabs from './HomeTabs';
-import News from '../screens/News';
-import Help from '../screens/Help';
-import Support from '../screens/Support';
-import Profile from '../screens/Profile';
-import Settings from '../screens/Settings';
-import DeveloperScreen from '../screens/developer/DeveloperScreen';
-import BecomeAHustler from '../screens/BecomeAHustler';
-import ListYourBusiness from '../screens/ListYourBusiness';
-import YourApplications from '../screens/YourApplications';
-import Switch from '../screens/settings/Switch';
 
 const Drawer = createDrawerNavigator();
 
@@ -25,7 +20,6 @@ const DrawerNavigator = ({ navigation }) => {
     profile_picture_url: '',
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [role, setRole] = useState(null);
 
   useEffect(() => {
     fetchUserProfile();
@@ -44,12 +38,10 @@ const DrawerNavigator = ({ navigation }) => {
     try {
       const userProfile = await fetchProfile(session.user.id);
       if (userProfile) {
-        console.log('User profile fetched:', userProfile);
         setProfile({
           first_name: userProfile.first_name,
           profile_picture_url: userProfile.profile_picture_url,
         });
-        setRole(userProfile.roles.role_name); 
       }
     } catch (error) {
       console.error('Error fetching profile data:', error);
@@ -98,50 +90,24 @@ const DrawerNavigator = ({ navigation }) => {
 
         <View style={styles.drawerItemsContainer}>
           <CustomDrawerItem
-            label="Home"
-            icon={<Ionicons name="home" size={20} color="#007BFF" />}
-            onPress={() => props.navigation.navigate('Home')}
+            label="Settings"
+            icon={<Ionicons name="settings" size={20} color="#007BFF" />}
+            onPress={() => props.navigation.navigate('Settings')}
           />
-
-          {role === 'Business Owner' && (
-            <CustomDrawerItem
-              label="My Business"
-              icon={<Ionicons name="storefront-outline" size={20} color="#007BFF" />}
-              onPress={() => props.navigation.navigate('ChatListScreen')}
-            />
-          )}
-          {role !== 'Hustler' && (
-            <CustomDrawerItem
-              label="My Applications"
-              icon={<Ionicons name="apps" size={20} color="#007BFF" />}
-              onPress={() => props.navigation.navigate('YourApplications')}
-            />
-          )}
-          {role === 'Developer' && (
-            <CustomDrawerItem
-              label="Developer"
-              icon={<Ionicons name="code" size={20} color="#007BFF" />}
-              onPress={() => props.navigation.navigate('DeveloperScreen')}
-            />
-          )}
-          {role !== 'Hustler' && (
-            <CustomDrawerItem
-              label="Become a Hustler"
-              icon={<Ionicons name="hammer" size={20} color="#007BFF" />}
-              onPress={() => props.navigation.navigate('BecomeAHustler')}
-            />
-          )}
-          {role !== 'Business Owner' && (
-            <CustomDrawerItem
-              label="List Your Business"
-              icon={<Ionicons name="business" size={20} color="#007BFF" />}
-              onPress={() => props.navigation.navigate('ListYourBusiness')}
-            />
-          )}
           <CustomDrawerItem
-            label="Switch Role"
-            icon={<Ionicons name="swap-horizontal" size={20} color="#007BFF" />}
-            onPress={() => props.navigation.navigate('Switch')}
+            label="External Resources"
+            icon={<Ionicons name="globe" size={20} color="#007BFF" />}
+            onPress={() => props.navigation.navigate('ExternalResources')}
+          />
+          <CustomDrawerItem
+            label="Awards / Certificates"
+            icon={<Ionicons name="medal" size={20} color="#007BFF" />}
+            onPress={() => props.navigation.navigate('AwardsCertificates')}
+          />
+          <CustomDrawerItem
+            label="Contact Us"
+            icon={<Ionicons name="call" size={20} color="#007BFF" />}
+            onPress={() => props.navigation.navigate('ContactUs')}
           />
         </View>
 
@@ -152,9 +118,8 @@ const DrawerNavigator = ({ navigation }) => {
             onPress={() => props.navigation.navigate('Help')}
           />
           <CustomDrawerItem
-            label="Support"
-            icon={<Ionicons name="headset" size={20} color="#007BFF" />}
-            onPress={() => props.navigation.navigate('Support')}
+            label="Logout"
+            icon={<Ionicons name="log-out" size={20} color="#007BFF" />}
           />
         </View>
       </DrawerContentScrollView>
@@ -172,16 +137,11 @@ const DrawerNavigator = ({ navigation }) => {
       }}
     >
       <Drawer.Screen name="Home" component={HomeTabs} options={{ headerShown: false }} />
-      <Drawer.Screen name="Profile" component={Profile} />
-      {isLoggedIn && <Drawer.Screen name="Settings" component={Settings} />}
-      <Drawer.Screen name="Switch" component={Switch} />
-      {role !== 'Hustler' && <Drawer.Screen name="BecomeAHustler" component={BecomeAHustler} />}
-      {role !== 'Business Owner' && <Drawer.Screen name="ListYourBusiness" component={ListYourBusiness} />}
-      <Drawer.Screen name="News" component={News} />
+      <Drawer.Screen name="Settings" component={Settings} />
+      <Drawer.Screen name="ExternalResources" component={ExternalResources} />
+      <Drawer.Screen name="AwardsCertificates" component={AwardsCertificates} />
+      <Drawer.Screen name="ContactUs" component={ContactUs} />
       <Drawer.Screen name="Help" component={Help} />
-      <Drawer.Screen name="Support" component={Support} />
-      {isLoggedIn && <Drawer.Screen name="YourApplications" component={YourApplications} />}
-      {role === 'Developer' && <Drawer.Screen name="DeveloperScreen" component={DeveloperScreen} />}
     </Drawer.Navigator>
   );
 };

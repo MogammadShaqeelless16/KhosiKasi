@@ -6,13 +6,10 @@ import supabase from '../supabaseClient';
 import { fetchProfile } from '../component/UserOperations/fetchProfile';
 
 // Import your screens
-import JobList from '../screens/JobList';
-import BusinessList from '../screens/BusinessList';
-import Services from '../screens/Services';
-import FeedsList from '../screens/FeedsList';
-import ProductsList from '../screens/ProductsList';
+import HomeScreen from '../screens/HomeScreen'; // Replace with your Home screen component
+import EducationScreen from '../screens/EducationScreen'; // Replace with your Education screen component
+import DownloadScreen from '../screens/DownloadScreen'; // Replace with your Download screen component
 import Profile from '../screens/Profile';
-import NewsScreen from '../screens/News';
 import Login from '../screens/Login'; // Import the Login screen
 import Loading from '../component/loadingComponent/loading';
 
@@ -74,27 +71,18 @@ const HomeTabs = () => {
           let iconName;
 
           switch (route.name) {
-            case 'FeedsList':
+            case 'Home':
               iconName = 'home-outline';
               break;
-            case 'JobList':
-              iconName = 'briefcase-outline';
+            case 'Education':
+              iconName = 'book-outline'; // Or any other appropriate icon
               break;
-            case 'ProductsList':
-              iconName = 'cart-outline';
-              break;
-            case 'BusinessList':
-              iconName = 'storefront-outline';
-              break;
-            case 'Services':
-              iconName = 'hammer-outline';
+            case 'Download':
+              iconName = 'download-outline';
               break;
             case 'Profile':
             case 'Login': // Use the same icon for Profile and Login tabs
               iconName = 'person-outline';
-              break;
-            case 'News':
-              iconName = 'newspaper-outline';
               break;
             default:
               iconName = 'help-circle-outline';
@@ -114,12 +102,9 @@ const HomeTabs = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="FeedsList" component={FeedsList} options={{ tabBarLabel: 'Home' }} />
-      <Tab.Screen name="News" component={NewsScreen} options={{ tabBarLabel: 'News' }} />
-      <Tab.Screen name="JobList" component={JobList} options={{ tabBarLabel: 'Jobs' }} />
-      {!isHustler && (
-      <Tab.Screen name="Services" component={Services} options={{ tabBarLabel: 'Services' }} />
-       )}  
+      <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
+      <Tab.Screen name="Education" component={EducationScreen} options={{ tabBarLabel: 'Education' }} />
+      <Tab.Screen name="Download" component={DownloadScreen} options={{ tabBarLabel: 'Download' }} />
       {isLoggedIn ? (
         <Tab.Screen name="Profile" component={Profile} options={{ tabBarLabel: 'Profile' }} />
       ) : (
