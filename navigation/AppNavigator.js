@@ -12,6 +12,7 @@ import EducationScreen from '../screens/EducationScreen'; // Education Screen
 import DownloadScreen from '../screens/DownloadScreen'; // Download Screen
 import Profile from '../screens/Profile';
 import Login from '../screens/Login'; // Login screen
+import ModuleDetails from '../screens/education/ModuleDetails'
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -63,6 +64,7 @@ const AppNavigator = () => {
             options={{ headerShown: false }} 
           />
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name="ModuleDetails" component={ModuleDetails} options={({ route }) => ({ title: route.params.module.title })} />
         </>
       )}
     </Stack.Navigator>

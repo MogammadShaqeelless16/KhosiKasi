@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Text, Button, Platform, StyleSheet } from 'react-native';
-import * as FileSystem from 'expo-file-system'; // For mobile
-import * as Sharing from 'expo-sharing'; // For mobile
+import { View, Text, Button, StyleSheet } from 'react-native';
+import * as FileSystem from 'expo-file-system';
+import * as Sharing from 'expo-sharing';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { PDFDocument } from 'pdf-lib'; // For web
 
 const ModuleDetails = ({ route }) => {
   const { moduleName } = route.params;
@@ -20,8 +19,8 @@ const ModuleDetails = ({ route }) => {
     }
   };
 
-  // Function to create and save a PDF certificate (Mobile)
-  const saveCertificateAsPDFMobile = async () => {
+  // Function to create and save a PDF certificate
+  const saveCertificateAsPDF = async () => {
     const pdfContent = `Certificate of Completion\n\nThis certifies that you have completed the module: ${moduleName}`;
     const pdfPath = `${FileSystem.documentDirectory}${moduleName}-Certificate.pdf`;
 
@@ -39,45 +38,8 @@ const ModuleDetails = ({ route }) => {
     }
   };
 
-  // Function to create and save a PDF certificate (Web)
-  const saveCertificateAsPDFWeb = async () => {
-    const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([600, 400]);
-    const { width, height } = page.getSize();
-
-    // Add text to the PDF
-    page.drawText('Certificate of Completion', {
-      x: 50,
-      y: height - 100,
-      size: 30,
-    });
-    page.drawText(`This certifies that you have completed the module: ${moduleName}`, {
-      x: 50,
-      y: height - 150,
-      size: 20,
-    });
-
-    // Serialize the PDF document to bytes
-    const pdfBytes = await pdfDoc.save();
-
-    // Create a Blob from the PDF data and trigger the download
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `${moduleName}-Certificate.pdf`;
-    link.click();
-
-    // Save the certificate name to AsyncStorage for listing in AwardsCertificates
-    await saveCertificateName(`${moduleName}-Certificate.pdf`);
-  };
-
-  // Function to share the PDF certificate (Mobile)
+  // Function to share the PDF certificate
   const sharePDF = async () => {
-    if (Platform.OS === 'web') {
-      alert('Sharing certificates is not available on the web.');
-      return;
-    }
-
     const pdfPath = `${FileSystem.documentDirectory}${moduleName}-Certificate.pdf`;
     const fileExists = await FileSystem.getInfoAsync(pdfPath);
 
@@ -91,10 +53,7 @@ const ModuleDetails = ({ route }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{moduleName} Details</Text>
-      <Button
-        title={Platform.OS === 'web' ? 'Download Certificate as PDF' : 'Save Certificate as PDF'}
-        onPress={Platform.OS === 'web' ? saveCertificateAsPDFWeb : saveCertificateAsPDFMobile}
-      />
+      <Button title="Save Certificate as PDF" onPress={saveCertificateAsPDF} />
       <Button title="Share Certificate" onPress={sharePDF} />
     </View>
   );
