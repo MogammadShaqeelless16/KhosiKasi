@@ -5,17 +5,41 @@ import ToolsSection from '../component/ToolItem';
 
 // Dummy Data for Courses and Tools
 const courses = [
-  { id: 1, title: 'Course 1', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1En_1TeH-DMc3RO62yNMb9V9_7M0myrs2EA&s', progress: 75, badges: ['Beginner'] },
-  { id: 2, title: 'Course 2', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1En_1TeH-DMc3RO62yNMb9V9_7M0myrs2EA&s', progress: 40, badges: ['Intermediate'] },
-  { id: 3, title: 'Course 3', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1En_1TeH-DMc3RO62yNMb9V9_7M0myrs2EA&s', progress: 90, badges: ['Advanced'] },
-  { id: 4, title: 'Course 4', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1En_1TeH-DMc3RO62yNMb9V9_7M0myrs2EA&s', progress: 20, badges: [] },
+  { 
+    id: 1, 
+    title: 'Financial Foundations: Budgeting Basics', 
+    image: '../assets/images/Budget.png', 
+    progress: 75, 
+    badges: ['Beginner'] 
+  },
+  { 
+    id: 2, 
+    title: 'Building Credit and Managing Debt', 
+    image: '../assets/images/Credit.png', 
+    progress: 40, 
+    badges: ['Intermediate'] 
+  },
+  { 
+    id: 3, 
+    title: 'Investing Essentials: Grow Your Wealth', 
+    image: '../assets/images/Expense.png', 
+    progress: 90, 
+    badges: ['Advanced'] 
+  },
+  { 
+    id: 4, 
+    title: 'Supporting Local Business and Community', 
+    image: '../assets/images/Tax.png', 
+    progress: 20, 
+    badges: [] 
+  },
 ];
 
 const tools = [
-  { id: 1, name: 'Budget Calculator', image: 'https://via.placeholder.com/50', isLocked: false },
-  { id: 2, name: 'Credit Score Checker', image: 'https://via.placeholder.com/50', isLocked: true, requiredCourse: 'Course 1' },
-  { id: 3, name: 'Expense Tracker', image: 'https://via.placeholder.com/50', isLocked: true, requiredCourse: 'Course 2' },
-  { id: 4, name: 'Expense Tracker', image: 'https://via.placeholder.com/50', isLocked: true, requiredCourse: 'Course 2' },
+  { id: 1, name: 'Budget Calculator', image: '../assets/images/Budget.png', isLocked: false },
+  { id: 2, name: 'Credit Score Checker', image: '../assets/images/Credit.png', isLocked: true, requiredCourse: 'Course 1' },
+  { id: 3, name: 'Expense Tracker', image: '../assets/images/Expense.png', isLocked: true, requiredCourse: 'Course 2' },
+  { id: 4, name: 'Expense Tracker', image: '../assets/images/Tax.png', isLocked: true, requiredCourse: 'Course 2' },
 ];
 
 const HomeScreen = () => {
